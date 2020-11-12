@@ -179,6 +179,8 @@ def ex6():
 
         index += 1
 
+    print(f"Товары: {goods_list}\n")
+
     # Аналитика. Исходные данные
     goods_analysis = []
     price_analysis = []
@@ -204,9 +206,9 @@ def ex6():
 
 
 # Последовательный запуск всех заданий
-ex1()
-ex2()
-ex3()
-ex4()
-ex5()
+#ex1()
+#ex2()
+#ex3()
+#ex4()
+#ex5()
 ex6()
