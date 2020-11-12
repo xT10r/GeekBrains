@@ -203,9 +203,10 @@ def ex6():
         print(f"{tuple_item:<15}: {total_analysis.get(tuple_item)}")
 
 
-#ex1()
-#ex2()
-#ex3()
-#ex4()
-#ex5()
+# Последовательный запуск всех заданий
+ex1()
+ex2()
+ex3()
+ex4()
+ex5()
 ex6()
