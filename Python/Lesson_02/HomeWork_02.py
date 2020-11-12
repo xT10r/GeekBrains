@@ -93,6 +93,7 @@ def ex4():
     list_strings = filter(None, input(
         ">> Задание 4. Введите несколько слов, разделяя их пробелами\nВвод слов: ").split(' '))
     for (index, value_str) in enumerate(list_strings, start=1):
+        value_str = value_str[:10]
         print(f"{index:<5} {value_str}")
     print("\n")
 
