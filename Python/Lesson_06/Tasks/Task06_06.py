@@ -49,7 +49,7 @@ class Handle(Stationery):
 pen = Pen("черепаха")
 pen.draw()
 
-pencil = Pen("жук")
+pencil = Pencil("жук")
 pencil.draw()
 
 handle = Handle("медверь")
