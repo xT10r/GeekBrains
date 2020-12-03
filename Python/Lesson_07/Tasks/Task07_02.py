@@ -14,42 +14,47 @@
 # Проверить на практике полученные на этом уроке знания:
 # - реализовать абстрактные классы для основных классов проекта,
 # - проверить на практике работу декоратора @property.
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class Cloth:
+	V: int = 0
+	H: int = 0
 
-	@abstractmethod
+	def __init__(self, V, H):
+		self.V = V if self.V == 0 else self.V
+		self.H = H if self.V == 0 else self.V
+
+	@property
 	def get_tissue_consumption(self):
 		if isinstance(self, Coat):
+			Cloth.V = self.V
 			return f"Расход ткани для пальто (V={self.V}): {self.V / 6.5 + 0.5}"
 		elif isinstance(self, Jacket):
+			Cloth.H = self.H
 			return f"Расход ткани для костюма (H={self.H}): {2 * self.H + 0.3}"
+
+	@property
+	def get_general_fabric_calculation(self):
+		return f"Общие затраты ткани: {Cloth.V + Cloth.H}"
 
 
 class Coat(Cloth, ABC):
 
-	@property
-	def get_coat_fabric_consumption(self):
-		return super().get_tissue_consumption()
-
-	def __init__(self, value=0):
-		self.V = value if isinstance(value, (int, float)) else 0
+	def __init__(self, V):
+		super().__init__(V, 0)
 
 
 class Jacket(Cloth, ABC):
 
-	@property
-	def get_jacket_consumption(self):
-		return super().get_tissue_consumption()
-
-	def __init__(self, value=0):
-		self.H = value if isinstance(value, (int, float)) else 0
+	def __init__(self, H):
+		super().__init__(0, H)
 
 
-my_coat = Coat(10.4)
+my_coat = Coat(10)
 my_jacket = Jacket(4)
 
-print(my_coat.get_coat_fabric_consumption)
+print(my_coat.get_tissue_consumption)
+print(my_jacket.get_tissue_consumption)
 
-print(my_jacket.get_jacket_consumption)
+print(my_jacket.get_general_fabric_calculation)
