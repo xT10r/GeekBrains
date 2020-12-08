@@ -29,14 +29,21 @@ class Cloth:
 	def get_tissue_consumption(self):
 		if isinstance(self, Coat):
 			Cloth.V = self.V
-			return f"Расход ткани для пальто (V={self.V}): {self.V / 6.5 + 0.5}"
+			return f"Расход ткани для пальто (V={self.V}): {self.get_round(self.V / 6.5 + 0.5)}"
 		elif isinstance(self, Jacket):
 			Cloth.H = self.H
-			return f"Расход ткани для костюма (H={self.H}): {2 * self.H + 0.3}"
+			return f"Расход ткани для костюма (H={self.H}): {self.get_round(2 * self.H + 0.3)}"
 
 	@property
 	def get_general_fabric_calculation(self):
-		return f"Общие затраты ткани: {Cloth.V + Cloth.H}"
+		return f"Общие затраты ткани: {self.get_round((Cloth.V / 6.5 + 0.5) + (2 * Cloth.H + 0.3))}"
+
+	@staticmethod
+	def get_round(value):
+		if isinstance(value, (int, float)):
+			return round(value, 2)
+		else:
+			return value
 
 
 class Coat(Cloth, ABC):

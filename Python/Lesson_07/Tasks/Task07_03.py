@@ -101,7 +101,7 @@ class OrganicCell:
 			if part_num == 0:
 				return
 			sym_num = min_value if part_num > 1 else max_value - (min_value * (x - 1))
-			result_str = result_str + f"{'*'*sym_num}\n"
+			result_str += f"{'*'*sym_num}\n"
 
 		return result_str
 
