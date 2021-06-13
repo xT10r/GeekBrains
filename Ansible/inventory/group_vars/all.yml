@@ -1,0 +1,6 @@
+---
+  admin_group: devops
+  admin_user: devops
+  admin_password: devopspassword
+  nginx_port: 9090
+  data_archives: /opt/data_archives/

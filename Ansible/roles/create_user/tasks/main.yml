@@ -1,0 +1,19 @@
+---
+- raw: groupadd "{{ admin_group }}"
+
+- name: Create User and Group
+  vars_files:
+    - vars/main.yml
+  block:
+    - name: Create user
+      user:
+        name: "{{ admin_user }}"
+        password: "{{ admin_password | password_hash('sha512') }}"
+        shell: /bin/bash
+        state: present
+        createhome: yes                 
+        home: /home/"{{ admin_user }}"
+        group: "{{ admin_group }}"
+  rescue:
+    - name: Rollback changes if need
+      command: date

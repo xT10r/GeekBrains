@@ -1,0 +1,98 @@
+---
+- name: Create Users & Groups & Files
+  hosts: servers
+  user: ansible_user
+
+  tasks:
+    # Создаем группу для пользователя
+    - name: Add group
+      group:
+        name: "{{ admin_group }}"
+        state: present
+    
+    # Создаем пользователя      
+    - name: Add User
+      user:
+        name: "{{ admin_user }}"
+        state: present
+        password: "{{ admin_password | password_hash('sha512','A512') }}"
+        shell: /bin/bash
+        group: "{{ admin_group }}"
+      loop:
+        - devops
+
+    # создаем пустой json-файл
+    - name: Add file to user home folder
+      file:
+        # state: directory
+        path: "/home/{{ admin_user }}/application.json"
+        owner: "{{ admin_user }}"
+        group: "{{ admin_group }}"
+        mode: '0644'
+        state: touch
+    
+    # Добавляю строку "{}"
+    - name: Add empty body to file 'application.json' (add line)
+      lineinfile:
+        path: "/home/{{ admin_user }}/application.json"
+        line: '{}'
+
+    # Устанавливаю пакет Nginx
+    - name: Ensure nginx is at the latest version
+      apt:
+        name: nginx
+        state: latest
+
+    # Заменяю файлы конфигурации NGINX (изменение порта с 80 на 9090)
+    - name: Copy nginx config file   
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+        mode: '0644'
+        #validate: nginx -t %s
+
+    # Добавление файлов конфигурации сайта NGINX
+    - name: Enable configuration
+      file: >
+        dest=/etc/nginx/sites-enabled/default
+        src=/etc/nginx/sites-available/default
+        state=link
+
+    # Копирую подготовленную HTML-страничку на удаленные сервера
+    - name: copy index.html
+      template:
+        src: templates/index.html.j2
+        dest: /usr/share/nginx/html/index.html
+        mode: '0644'
+
+    # Запускаю службу nginx и добавляю её в автозапуск
+    - name: Start Nginx
+      service:
+          name: nginx
+          enabled: true
+          state: started
+
+    # Перезапускаю службу NGINX
+    - name: Restart nginx
+      service: name=nginx state=restarted    
+    
+    # получаю статус службы NGINX
+    - name: Check Nginx Status
+      shell: systemctl status nginx | grep "Active\|Loaded"
+      check_mode: no
+      register: nginx_exists
+      changed_when: False
+      failed_when: nginx_exists.rc not in [0, 1]
+
+    # Создам каталог в /opt
+    - name: Add Folder to "/Opt"
+      file:
+        path: "{{ data_archives }}"
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+
+    # Добавив файл из интернета в каталог "archive_data"
+    - name: Add File From Internet to folder {{ archive_data }}       
+      shell: wget https://www.digitalocean.com/robots.txt -P "{{ data_archives }}"
+      
+      

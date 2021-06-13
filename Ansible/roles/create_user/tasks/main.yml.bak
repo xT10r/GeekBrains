@@ -1,0 +1,17 @@
+---
+- raw: groupadd "{{ user.group }}"
+
+- name: Create User and Group
+  block:
+    - name: Create user
+      user:
+        name: "{{ user.login }}"
+        password: "{{ user.password | password_hash('sha512') }}"
+        shell: /bin/bash
+        state: present
+        createhome: yes                 
+        home: /home/"{{ user.login}}"
+        group: "{{ user.group }}"
+  rescue:
+    - name: Rollback changes if need
+      command: date

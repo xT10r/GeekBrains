@@ -31,5 +31,6 @@ class TrafficLight:
 				time.sleep(1)
 
 
+input("Press any key...")
 lights = TrafficLight()
 lights.running()
