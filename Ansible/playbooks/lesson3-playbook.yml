@@ -1,0 +1,27 @@
+---
+- name: Lesson 3. Packages
+  hosts: webserver
+  user: ansible_user
+  become: true
+  tasks:
+    - name: Pre check before installing  MySQL Server
+      shell: ps aux | grep mysql | grep -v grep
+      ignore_errors: yes
+      register: mysql_proc_status
+
+    - name: Install packages
+      package:
+        name: "{{item}}"
+        state: present
+      loop:
+        # Установка MySQL
+        - mysql-server
+        # Установка WordPress
+        - wordpress
+        - php
+        - libapache2-mod-php
+        - php-mysql
+        # Установка Nginx
+        - nginx
+      
+      

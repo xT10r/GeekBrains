@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+[client]
+port = {{ mysql_port }}
+socket = {{ mysql_socket }}
+
+[mysqld]
+port = {{ mysql_port }}
+bind-address = {{ mysql_bind_address }}
+datadir = {{ mysql_data_dir }}
+socket = {{ mysql_socket }}
+pid-file = {{ mysql_pid_file }}
+{% if mysql_sql_mode %}
+sql_mode = {{ mysql_sql_mode }}
+{% endif %}
+
+# InnoDB settings.
+innodb_checksum_algorithm = {{ mysql_innodb_checksum_algorithm }}
+innodb_file_per_table = {{ mysql_innodb_file_per_table }}
+innodb_autoinc_lock_mode = {{ mysql_innodb_autoinc_lock_mode }}
+innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
