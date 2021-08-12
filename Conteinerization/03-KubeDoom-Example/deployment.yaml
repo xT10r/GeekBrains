@@ -7,6 +7,10 @@ metadata:
   namespace: kubedoom
 spec:
   replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0 # максимальное количество недопустимых подов
+      maxSurge: 1 # количество подов которое может быть создано за раз
   selector:
     matchLabels:
       app: kubedoom
