@@ -1,6 +1,9 @@
 .idea
 venv
 
+# Кубер
+Kubernetes/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
