@@ -4,8 +4,12 @@ kind: Service
 metadata:
   name: database
 spec:
-  type: ClusterIP
-  ports:
-    - port: 5432
   selector:
-    service: postgres
+    app: postgres-container
+    #tier: backend  
+  ports:
+  - name: postgres-ports
+    protocol: TCP
+    port: 80 
+    targetPort: 5432
+#  type: ClusterIP

@@ -2,12 +2,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgres-container
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: postgres-container
   strategy:
     #rollingUpdate:
     #  maxSurge: 1
@@ -17,13 +17,13 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres-container
     spec:
       containers:
       - image: postgres:10.13
         name: postgres
         ports:
-          - name: port5432
+          - name: postgres-port
             containerPort: 5432
         env:
           - name: POSTGRES_DB
@@ -46,13 +46,13 @@ spec:
         volumeMounts:
           - mountPath: "/var/lib/postgresql/data"
             name: postgres-data-pvc 
-        resources:
-          requests:
-            cpu: 100m
-            memory: 400Mi
-          limits:
-            cpu: 100m
-            memory: 400Mi
+        #resources:
+        #  requests:
+        #    cpu: 100m
+        #    memory: 400Mi
+        #  limits:
+        #    cpu: 100m
+        #    memory: 400Mi
       volumes:
         - name: postgres-data-pvc
           persistentVolumeClaim:

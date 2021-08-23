@@ -2,45 +2,61 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redmine
+  name: redmine-container
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redmine
+      app: redmine-container
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: redmine
+        app: redmine-container
     spec:
       containers:
       - image: redmine:4.1.1
         name: redmine
         ports:
-          - name: port5432
-            containerPort: 5432
+          - name: redmine-port
+            containerPort: 3000
         env:
-          - name: POSTGRES_DB
-            valueFrom:
-              configMapKeyRef:
-                 name: postgres-config
-                 key: POSTGRES_DB
-          - name: POSTGRES_USER
+          - name: REDMINE_DB_POSTGRES
+            value: database
+          - name: REDMINE_DB_USERNAME
             valueFrom:
               configMapKeyRef:
                  name: postgres-config
                  key: POSTGRES_USER
-          - name: POSTGRES_PASSWORD
+          - name: REDMINE_DB_PASSWORD
             valueFrom:
               configMapKeyRef:
                  name: postgres-config
                  key: POSTGRES_PASSWORD
-        resources:
-          requests:
-            cpu: 100m
-            memory: 400Mi
-          limits:
-            cpu: 100m
-            memory: 400Mi
+          - name: REDMINE_DB_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                 name: postgres-config
+                 key: POSTGRES_DB
+          - name: REDMINE_SECRET_KEY_BASE
+            valueFrom:
+              configMapKeyRef:
+                 name: redmine-config
+                 key: REDMINE_SECRET_KEY_BASE
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /
+            port: 3000
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+          initialDelaySeconds: 60
+        #resources:
+        #  requests:
+        #    cpu: 100m
+        #    memory: 400Mi
+        #  limits:
+        #    cpu: 100m
+        #    memory: 400Mi
