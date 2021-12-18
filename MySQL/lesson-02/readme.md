@@ -1,11 +1,10 @@
 ## Задание 2
 ### 1. Пусть в таблице catalogs базы данных shop в строке name могут находиться пустые строки и поля, принимающие значение NULL. Напишите запрос, который заменяет все такие поля на строку ‘empty’. Помните, что на уроке мы установили уникальность на поле name. Возможно ли оставить это условие? Почему?
 
-Запрос для обновления всех записей (null в «empty»), без учета уникальности
-> mysql
-
 #### Запрос для обновления всех записей (null в «empty»), без учета уникальности
 ~~~
+> mysql
+
 UPDATE shop.catalogs
 SET name = 'empty'
 WHERE name IS NULL;
@@ -15,6 +14,8 @@ SELECT * FROM shop.catalogs;
 #### Запрос для обновления записей (одной штуки) с учетом уникальности
 
 ~~~
+> mysql
+
 UPDATE IGNORE shop.catalogs
 SET name = 'empty'
 WHERE name IS NULL;
@@ -24,6 +25,8 @@ SELECT * FROM shop.catalogs;
 #### Запрос для обновления всех записей (null в «empty») со снятием ключа уникальности
 
 ~~~
+> mysql
+
 ALTER TABLE shop.catalogs drop index unique_name;
 UPDATE shop.catalogs
 SET name = 'empty'
