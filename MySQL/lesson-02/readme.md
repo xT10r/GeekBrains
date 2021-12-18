@@ -173,6 +173,8 @@ FROM
     sample.cat as cat
 LEFT JOIN shop.catalogs as catalogs
     ON cat.id = catalogs.id;
+    
+EXIT;
 ~~~
 
 #### Результат в табличном виде
