@@ -42,16 +42,16 @@ EXIT;
 #### Создам дамп БД 'example' и разверну его в БД 'sample'
 
 ~~~
-mysqldump -v -uroot example > ~/dump_example.sql
-mysql -uroot -hlocalhost -e "CREATE DATABASE IF NOT EXISTS sample; SHOW DATABASES;"
-mysql -uroot -hlocalhost sample < ~/dump_example.sql
-mysql -uroot -hlocalhost -e "DESCRIBE sample.users;"
+mysqldump -v example > ~/dump_example.sql
+mysql -e "CREATE DATABASE IF NOT EXISTS sample; SHOW DATABASES;"
+mysql sample < ~/dump_example.sql
+mysql -e "DESCRIBE sample.users;"
 ~~~
 
 ### 3. (по желанию) Ознакомьтесь более подробно с документацией утилиты mysqldump. Создайте дамп единственной таблицы help_keyword базы данных mysql. Причем добейтесь того, чтобы дамп содержал только первые 100 строк таблицы.
 
 ~~~
-mysqldump -u root -p --opt --where="1 limit 100" mysql help_keyword > ~/first_100_rows_help_keyword.sql
+mysqldump --opt --where="1 limit 100" mysql help_keyword > ~/first_100_rows_help_keyword.sql
 ~~~
 
 ----
@@ -59,5 +59,5 @@ mysqldump -u root -p --opt --where="1 limit 100" mysql help_keyword > ~/first_10
 
 ### Сделаю бэкап созданных БД (example, sample) из MySQL
 ~~~
-mysqldump -u root -B example sample > ~/lesson01_databases.sql
+mysqldump -B example sample > ~/lesson01_databases.sql
 ~~~
