@@ -2,10 +2,15 @@
 ### 1. Установите СУБД MySQL. Создайте в домашней директории файл .my.cnf, задав в нем логин и пароль, который указывался при установке.
 
 #### Установлю MySQL
+~~~
 sudo apt install mysql-server mysql-client
+~~~
 
 #### Проверю версию (что установил по дефолту)
+~~~
 mysql -V
+~~~
+
 > mysql  Ver 8.0.27-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu))
 
 #### Добавлю пользователю в папку home файл ".my.cnf", это желательно сделать чтобы постоянно не писать "креды" подключения к MySQL. Ниже приведено содержимое файла:
@@ -21,9 +26,9 @@ password=r00tStr0ngPa$$w0rd
 
 #### Создам БД с таблицей users (id, name)
 
+~~~
 > mysql
 
-~~~
 SHOW DATABASES;
 CREATE DATABASE example;
 SHOW CREATE DATABASE example;
@@ -45,10 +50,14 @@ mysql -uroot -hlocalhost -e "DESCRIBE sample.users;"
 
 ### 3. (по желанию) Ознакомьтесь более подробно с документацией утилиты mysqldump. Создайте дамп единственной таблицы help_keyword базы данных mysql. Причем добейтесь того, чтобы дамп содержал только первые 100 строк таблицы.
 
+~~~
 mysqldump -u root -p --opt --where="1 limit 100" mysql help_keyword > ~/first_100_rows_help_keyword.sql
+~~~
 
 ----
 
 
 ### Сделаю бэкап созданных БД (example, sample) из MySQL
+~~~
 mysqldump -u root -B example sample > ~/lesson01_databases.sql
+~~~
