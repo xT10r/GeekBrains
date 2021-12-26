@@ -66,11 +66,8 @@ ALTER TABLE users MODIFY updated_at VARCHAR(255);
 -- Задание 2. Добавлю записи с датами формата '%d-%m-%Y %H:%i' / '20.10.2021 8:10'
 -- * Записи с таким форматом не будут иметь секунд при преобразовании в формат 'date'!
 INSERT INTO users (id, name, birthday_at, created_at, updated_at) VALUES
-
     (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 SECOND), '%d-%m-%Y %H:%i'),   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 SECOND), '%d-%m-%Y %H:%i')),
-
     (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 SECOND), '%d-%m-%Y %H:%i'),   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 SECOND), '%d-%m-%Y %H:%i')),
-
     (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 SECOND), '%d-%m-%Y %H:%i'),   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 SECOND), '%d-%m-%Y %H:%i'));
 
 -- Задание 2. Исходные записи таблицы users
@@ -137,7 +134,7 @@ INSERT INTO users (id, name, birthday_at, created_at, updated_at) VALUES
 -- Задание 4. Извлечение пользователей по выбранным месяцам из даты рождения (результат)
 SELECT *, LOWER(MONTHNAME(birthday_at)) as month
 FROM users
-WHERE LOWER(MONTHNAME(birthday_at)) like 'may' OR LOWER(MONTHNAME(birthday_at)) like 'august'
+WHERE LOWER(MONTHNAME(birthday_at)) like 'may' OR LOWER(MONTHNAME(birthday_at)) like 'august';
 
 
 
