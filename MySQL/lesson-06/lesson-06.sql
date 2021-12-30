@@ -80,7 +80,7 @@ WITH RECURSIVE `days` AS
 -- Задание 3. Результат
 SELECT *, IF(calendar_days.created_at IS NOT NULL, 1, 0) as day_exist
 FROM `days` as cte_days
-LEFT JOIN sample.lesson_06_03_some_dates as calendar_days ON cte_days.day = calendar_days.created_at
+LEFT JOIN sample.lesson_06_03_some_dates as calendar_days ON cte_days.day = calendar_days.created_at;
 
 
 -- ЗАДАНИЕ 4
