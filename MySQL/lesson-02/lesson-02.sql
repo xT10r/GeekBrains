@@ -115,7 +115,7 @@ CREATE TABLE files_metadata (
 ) ENGINE=INNODB;
 
 -- 3. Заполнение таблицы предопределенными данными
--- 3.1. Заполю таблицу owners
+-- 3.1. Заполню таблицу owners
 INSERT INTO owners (id, owner_name) VALUES
     (1, 'Petrov Ivan'),
     (2, 'Samoylov Michael'),
@@ -149,10 +149,26 @@ INSERT INTO files_metadata (id, owner_id, file_name, file_path, tag_id, tag_titl
     (default, 3, '1982_E.T._The_Extra-Terrestrial.mkv', '/opt/storage_media/content/movies/1982_E.T._The_Extra-Terrestrial.mkv', 2, 'E.T. the Extra-Terrestrial', 'Steven Spielberg', 'A troubled child summons the courage to help a friendly alien escape Earth and return to his home world.', 3),
     (default, 4, '1827-The_Death_Of_Sardanapalus.jpg', '/opt/storage_media/content/pictures/1827/1827-The_Death_Of_Sardanapalus.jpg', 3, 'The Death of Sardanapalus', 'Eugene Delacroix', 'The composition shows the bearded Sardanapalus lounging (upper left) on a sumptuous divan, in the midst of an orgy of death and destruction', 4);
 
--- 4. Покажу результат
+-- 4. Покажу результат (без связей таблиц)
 SELECT * FROM files_metadata;
 
--- 5. Покажу список созданных БД (проверю что ничего лишнего не создал)
+-- 5. Покажу результат (со связями таблиц)
+SELECT
+    fm.id,
+    fm.file_name,
+    fm.file_path,
+    fm.tag_title,
+    fm.tag_author,
+    fm.tag_description,
+    o.owner_name,
+    t.tag_name,
+    s.style_name
+FROM files_metadata as fm
+LEFT JOIN owners o on fm.owner_id = o.id
+LEFT JOIN tags t on fm.tag_id = t.id
+LEFT JOIN styles s on fm.style_id = s.id;
+
+-- 6. Покажу список созданных БД (проверю что ничего лишнего не создал)
 SHOW DATABASES;
 
 
