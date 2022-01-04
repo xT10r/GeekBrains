@@ -26,22 +26,17 @@ BEGIN
   SET num = 0;
   WHILE
     num < 20 DO
-
         SET u_name = CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100)));
         SET u_birthday_at = SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY);
         SET u_created_at = DATE_ADD(NOW(), INTERVAL (FLOOR ( (RAND( ) * 10) - (RAND( ) * 70) )) SECOND);
         SET u_updated_at = DATE_ADD(NOW(), INTERVAL (FLOOR ( (RAND( ) * 10) - (RAND( ) * 70) )) SECOND);
-
         IF num = (FLOOR ( RAND() * (num-5) + 5 )) THEN
             SET u_created_at = NULL;
             SET u_updated_at = NULL;
         END IF;
-
         INSERT INTO shop.users (id, name, birthday_at, created_at, updated_at)
         VALUES (default, u_name, u_birthday_at, u_created_at, u_updated_at);
-
         SET num = num + 1;
-
   END WHILE;
 END;
 
@@ -126,8 +121,14 @@ SELECT * FROM storehouses_products;
 -- Задание 3. Сортировка значений (результат)
 SELECT value
 FROM storehouses_products
+-- Красивый вариант сортировки по возрастанию (нулевые значения будут последними)
+ORDER BY value = 0, value;
+/*
+-- Не очень красивый, но рабочий вариант сортировки
 ORDER BY IF(value > 0, 0, 1), value;
--- Решение от ГБ ORDER BY value = 0, value
+*/
+
+
 
 
 -- ЗАДАНИЕ 4
