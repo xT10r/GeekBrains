@@ -16,32 +16,37 @@ CREATE TABLE users (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) COMMENT = 'Покупатели';
 
--- Задание 1. Добавлю (более-менее) случайные записи
-INSERT INTO users (id, name, birthday_at, created_at, updated_at) VALUES
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -10 SECOND), DATE_ADD(NOW(), INTERVAL -10 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -8 SECOND), DATE_ADD(NOW(), INTERVAL -8 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -5 SECOND), DATE_ADD(NOW(), INTERVAL -5 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -3 SECOND), DATE_ADD(NOW(), INTERVAL -3 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -1 SECOND), DATE_ADD(NOW(), INTERVAL -1 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -3 SECOND), DATE_ADD(NOW(), INTERVAL -3 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -1 SECOND), DATE_ADD(NOW(), INTERVAL -1 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -3 SECOND), DATE_ADD(NOW(), INTERVAL -3 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -1 SECOND), DATE_ADD(NOW(), INTERVAL -1 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   DATE_ADD(NOW(), INTERVAL -3 SECOND), DATE_ADD(NOW(), INTERVAL -3 SECOND)),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null),
-    (default,   CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100))),   SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY),   null, null);
+-- Задание 1. Создам процедуру для добавления случайных покупателей/пользователей (20 штук)
+DROP PROCEDURE IF EXISTS generate_shop_users;
+CREATE PROCEDURE generate_shop_users()
+BEGIN
+  DECLARE num INT;
+  DECLARE u_name VARCHAR(255);
+  DECLARE u_birthday_at, u_created_at, u_updated_at DATETIME;
+  SET num = 0;
+  WHILE
+    num < 20 DO
+
+        SET u_name = CONCAT('user-', LEFT(UUID(), 9), FLOOR ( (RAND( ) * 100)));
+        SET u_birthday_at = SUBDATE(SUBDATE(SUBDATE(DATE_ADD(NOW(), INTERVAL -41 YEAR), INTERVAL (FLOOR ( (RAND( ) * 20) - (RAND( ) * 30) )) YEAR), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) MONTH), INTERVAL (FLOOR ( (RAND( ) * 7) - (RAND( ) * 10) )) DAY);
+        SET u_created_at = DATE_ADD(NOW(), INTERVAL (FLOOR ( (RAND( ) * 10) - (RAND( ) * 70) )) SECOND);
+        SET u_updated_at = DATE_ADD(NOW(), INTERVAL (FLOOR ( (RAND( ) * 10) - (RAND( ) * 70) )) SECOND);
+
+        IF num = (FLOOR ( RAND() * (num-5) + 5 )) THEN
+            SET u_created_at = NULL;
+            SET u_updated_at = NULL;
+        END IF;
+
+        INSERT INTO shop.users (id, name, birthday_at, created_at, updated_at)
+        VALUES (default, u_name, u_birthday_at, u_created_at, u_updated_at);
+
+        SET num = num + 1;
+
+  END WHILE;
+END;
+
+-- Задание 1. Добавлю случайные записи покупателей/пользователей при помощи процедуры (20 штук)
+CALL generate_shop_users();
 
 -- Задание 1. Исходные записи таблицы users
 SELECT * FROM users;
@@ -122,6 +127,7 @@ SELECT * FROM storehouses_products;
 SELECT value
 FROM storehouses_products
 ORDER BY IF(value > 0, 0, 1), value;
+-- Решение от ГБ ORDER BY value = 0, value
 
 
 -- ЗАДАНИЕ 4
