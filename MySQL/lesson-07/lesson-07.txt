@@ -1,0 +1,64 @@
+# Просмотр запущенных процессов (Ubuntu)
+# ps aux | grep mysqld
+
+# Просмотр параметров mysql
+# mysqld --verbose --help
+
+# Запустим mysql
+# mysql -u root
+
+# Параметры запуска можно не прописывать при запуске программ 
+# mysql, mysqldump, server, client, mysqld-5.7, mysqld-5.8, mysqld...
+# их можно прописать в отдельном конфигурационном файле my.cnf в каталоге ~
+
+# Для остановки демона MySQL можно воспользоваться командой
+# (macos) sudo /usr/local/opt/mysql/support-files/mysql.server stop/start/restart
+# (ubuntu) sudo service mysql stop/start/restart
+
+# Журнал error.log (SHOW VARIABLES LIKE 'log_error') сорежит ошибки, в том числе запуска сервера
+# поэтому в случае невозможности запуска сервера MySQL следует начинать анализ инцидента отсюда
+
+# Общий журнал запросов позволяет регистрировать все соединения клиентов (SHOW VARIABLES LIKE 'general_log')
+# Включим общий журнал
+# Посмотрим состояние журнала: mysql -e "SHOW VARIABLES LIKE 'general_log%';"
+# Создадим дамп БД Shop командой: mysqldump -u root -B shop > ~/lesson-07_databases-dump.sql
+# * В результате общий журнал пополнится записями о создании дампа БД shop
+
+# Журнал медленных запросов позволяет регистрировать запросы превышающее заданное максимальное временное значение (SHOW VARIABLES LIKE 'slow_query_log%';)
+# Включим журнал медленных запросов
+# Посмотрим состояние журнала: mysql -e "SHOW VARIABLES LIKE 'slow_query_log%';"
+# Выполним медленный запрос (около 30 сек): SELECT BENCHMARK(1000000000, (SELECT COUNT(*) FROM shop.products));
+# Т.к. время выполнения запроса превысило (по-умолчанию 10 сек) 10 сек, то запись об этом запросе запишется в журнал медленных запросов
+# Посмотреть информацию о медленных запросах можно:
+# - либо "напрямую" (так лучше не делать): cat /var/log/mysql/slow-query.log
+# - либо используя команду: mysqldumpslow /var/log/mysql/slow-query.log
+
+# Помимо записи журналов в файлы, MySQL умеет писать записи журналов в отдельные таблицы БД mysql
+# SELECT * FROM mysql.general_log;
+# SELECT * FROM mysql.slow_log;
+# В данный момент эти аблицы пустые, т.к. значение переменной 'log_output=FILE'. (SHOW VARIABLES LIKE 'log_output');
+# Эта переменная может принимать значения: TABLE/FILE/NONE
+# Изменим значение параметра хранения журналов с FILE на TABLE
+# log_output=TABLE
+# (перезагрузу демона сервера MySQL)
+# выполню запрос бенчмарка: SELECT BENCHMARK(1000000000, (SELECT COUNT(*) FROM shop.products));
+# Посмотрю таблицу mysql.slow_log, т.к. в ней должна была появиться запись: SELECT CONVERT(sql_text USING utf8) FROM mysql.slow_log;
+
+# Бинарный журнал.
+# Посмотреть состояние журнала можно при помощи команды (SHOW VARIABLES LIKE 'log_bin';)
+# После включения журнала пересоздам пару таблиц в БД shop
+# В результате размер файла бинарного журнала (по-умолчанию: /var/log/mysql/mysql-bin.000001) увеличится.
+# Посмотреть содержимое журнала просто так не получится, т.к. он содержит бинарные данные
+# Конвертируем журнал при помощи утилиты mysqlbinlog
+# mysqlbinlog /var/log/mysql/mysql-bin.000001
+
+# Максимальное количество соединений
+# SHOW VARIABLES LIKE 'max_connections';
+
+# Отслеживание соединений
+# SHOW PROCESSLIST;
+# Завершение соединений выполняется при момощи команды KILL и указания ID соединения
+# (например: KILL 2;)
+
+# Создание пользователей
+CREATE USER shop IDENTIFIED WITH sha256_password BY 'pass';
