@@ -142,4 +142,117 @@ EXIT;
 |Radeon™ RX 6900 XT|Enthusiast|146282.00|12|
 
 
+### 3. (по желанию) Напишите хранимую функцию для вычисления произвольного числа Фибоначчи. Числами Фибоначчи называется последовательность, в которой число равно сумме двух предыдущих чисел. Вызов функции FIBONACCI(10) должен возвращать число 55.
+
+#### Создам функцию для расчета числа Фибоначчи
+
+~~~
+> mysql
+
+DROP FUNCTION IF EXISTS FIBONACCI;
+DELIMITER //
+CREATE FUNCTION FIBONACCI (num BIGINT) RETURNS BIGINT DETERMINISTIC
+BEGIN
+
+    DECLARE i, num_count, num_prev BIGINT default 0;
+    DECLARE num_next BIGINT default 1;
+    DECLARE num_sum, res BIGINT;
+    DECLARE num_sign TINYINT DEFAULT 1;
+
+    IF num < 0 THEN SET num_sign = -1; END IF;
+
+    cycle: WHILE (i <= ABS(num)) DO
+
+        IF (i >= ABS(num)) THEN LEAVE cycle;
+        END IF;
+
+        SET num_sum = num_prev + num_next * num_sign;
+        SET num_prev = num_next;
+        SET num_next = num_sum;
+
+        SET i = i + 1;
+    END WHILE cycle;
+
+    SET res = num_prev;
+
+    RETURN res;
+
+END //
+DELIMITER ;
+
+EXIT;
+~~~
+
+#### Выполню проверку по условию из задания. Вызов функции FIBONACCI(10) должен возвращать число 55.
+
+~~~
+> mysql
+
+SELECT FIBONACCI(10) as `fib(10)`;
+
+EXIT;
+~~~
+
+|`fib(10)`|
+|-|
+|55|
+
+#### Проверю правильность чисел ряда Фибоначчи, например в диапазоне от -12 до 12. Для этого подготовлю небольшую процедуру
+
+~~~
+> mysql
+
+-- Задание 3. Процедура для вывода числе Фибоначчи
+DROP PROCEDURE IF EXISTS get_fibonacci;
+DELIMITER //
+CREATE PROCEDURE get_fibonacci(IN `range` INT)
+BEGIN
+    DECLARE i INT DEFAULT (ABS(`range`) * -1);
+    DROP TABLE IF EXISTS temp_fibonacci;
+    CREATE TEMPORARY TABLE temp_fibonacci (`N` INT, `Fn` BIGINT);
+
+    cycle: WHILE (i <= ABS(`range`)) DO
+        INSERT INTO temp_fibonacci
+        SELECT i, FIBONACCI(i);
+        SET i = i + 1;
+    END WHILE cycle;
+
+    SELECT * FROM temp_fibonacci;
+
+END //
+DELIMITER ;
+
+-- Выполню процедуру
+CALL get_fibonacci(12);
+
+EXIT;
+~~~
+
+|`N`|`Fn`|
+|-|-|
+|-12|-144|
+|-11|89|
+|-10|-55|
+|-9|34|
+|-8|-21|
+|-7|13|
+|-6|-8|
+|-5|5|
+|-4|-3|
+|-3|2|
+|-2|-1|
+|-1|1|
+|0|0|
+|1|1|
+|2|1|
+|3|2|
+|4|3|
+|5|5|
+|6|8|
+|7|13|
+|8|21|
+|9|34|
+|10|55|
+|11|89|
+|12|144|
 

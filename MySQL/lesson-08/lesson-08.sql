@@ -97,3 +97,60 @@ SELECT name, description, price, catalog_id FROM products;
 Числами Фибоначчи называется последовательность, в которой число равно сумме двух предыдущих чисел.
 Вызов функции FIBONACCI(10) должен возвращать число55.
 */
+
+DROP FUNCTION IF EXISTS FIBONACCI;
+DELIMITER //
+CREATE FUNCTION FIBONACCI (num BIGINT) RETURNS BIGINT DETERMINISTIC
+BEGIN
+
+    DECLARE i, num_count, num_prev BIGINT default 0;
+    DECLARE num_next BIGINT default 1;
+    DECLARE num_sum, res BIGINT;
+    DECLARE num_sign TINYINT DEFAULT 1;
+
+    IF num < 0 THEN SET num_sign = -1; END IF;
+
+    cycle: WHILE (i <= ABS(num)) DO
+
+        IF (i >= ABS(num)) THEN LEAVE cycle;
+        END IF;
+
+        SET num_sum = num_prev + num_next * num_sign;
+        SET num_prev = num_next;
+        SET num_next = num_sum;
+
+        SET i = i + 1;
+    END WHILE cycle;
+
+    SET res = num_prev;
+
+    RETURN res;
+
+END //
+DELIMITER ;
+
+-- Задание 3. Процедура для вывода числе Фибоначчи
+DROP PROCEDURE IF EXISTS get_fibonacci;
+DELIMITER //
+CREATE PROCEDURE get_fibonacci(IN `range` INT)
+BEGIN
+    DECLARE i INT DEFAULT (ABS(`range`) * -1);
+    DROP TABLE IF EXISTS temp_fibonacci;
+    CREATE TEMPORARY TABLE temp_fibonacci (`N` INT, `Fn` BIGINT);
+
+    cycle: WHILE (i <= ABS(`range`)) DO
+        INSERT INTO temp_fibonacci
+        SELECT i, FIBONACCI(i);
+        SET i = i + 1;
+    END WHILE cycle;
+
+    SELECT * FROM temp_fibonacci;
+
+END //
+DELIMITER ;
+
+-- Результат задания 3. Проверка по условию задачи
+SELECT FIBONACCI(10) as `fib(10)`;
+
+-- Результат задания 3. Часть ряда чисел Фибоначчи
+CALL get_fibonacci(12);
